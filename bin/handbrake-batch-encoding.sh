@@ -218,6 +218,7 @@ main () {
     encode_movie "${movie}" || true
   done
 
+  sleep 3
   log_info "Finished batch encoding."
 }
 
