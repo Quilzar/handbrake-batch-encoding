@@ -49,7 +49,7 @@ send_pushover_message () {
 
   local -r token="${PUSHOVER_TOKEN}"
   local -r user_key="${PUSHOVER_USER_KEY}"
-  local -r title="Message From HandbrakeCLI on ${hostname}"
+  local -r title="Handbrake Batch Encoding"
   local -r url="https://api.pushover.net/1/messages.json"
 
   curl -s \
@@ -63,12 +63,12 @@ send_pushover_message () {
 
 log_info () {
   printf '<6>%s\n' "$*"
-  send_pushover_message "INFO: $*"
+  send_pushover_message "$*"
 }
 
 log_error () {
   printf '<3>%s\n' "$*" >&2
-  send_pushover_message "ERROR: $*" "high"
+  send_pushover_message "$*" "high"
 }
 
 acquire_lock () {
