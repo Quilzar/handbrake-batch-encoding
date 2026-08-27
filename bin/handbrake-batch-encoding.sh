@@ -95,6 +95,16 @@ validate_environment () {
     exit 1
   fi
 
+  if [[ ! -d "${base_input_dir}" ]]; then
+    log_error "Input directory missing or unmounted."
+    exit 1
+  fi
+
+  if [[ ! -d "${base_output_dir}" ]]; then
+    log_error "Output directory missing or unmounted."
+    exit 1
+  fi
+
   mkdir -p "${log_dir}" "${base_output_dir}"
 
   # notify systemd we are good to go!
