@@ -8,6 +8,7 @@ readonly required_env_vars=(
   "HANDBRAKE_APP_DIR"
   "HANDBRAKE_INPUT_DIR"
   "HANDBRAKE_OUTPUT_DIR"
+  "HANDBRAKE_PROFILE"
   "PUSHOVER_TOKEN"
   "PUSHOVER_USER_KEY"
 )
@@ -30,8 +31,7 @@ readonly lock_file="${app_dir}/handbrake-batch-encoding.lock"
 
 # Define profiles
 readonly profile_dir="${app_dir}/profiles"
-readonly profile="plex-1080p"
-#readonly profile="plex-1080p-light-denoise"
+readonly profile="${HANDBRAKE_PROFILE}"
 readonly preset_file="${profile_dir}/${profile}.json"
 
 # Define functions
