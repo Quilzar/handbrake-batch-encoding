@@ -52,13 +52,16 @@ send_pushover_message () {
   local -r title="Handbrake Batch Encoding"
   local -r url="https://api.pushover.net/1/messages.json"
 
-  curl -s \
-    --data-urlencode "token=${token}" \
-    --data-urlencode "user=${user_key}" \
-    --data-urlencode "title=${title}" \
-    --data-urlencode "message=${message}" \
-    --data-urlencode "priority=${priority}" \
-    "${url}" > /dev/null
+  local -r -a curl_flags=(
+    -s
+    --data-urlencode "token=${token}"
+    --data-urlencode "user=${user_key}"
+    --data-urlencode "title=${title}"
+    --data-urlencode "message=${message}"
+    --data-urlencode "priority=${priority}"
+  )
+
+  curl "${curl_flags[@]}" "${url}" > /dev/null
 }
 
 log_info () {
@@ -177,13 +180,14 @@ encode_movie () {
   fi
 
   # encode movie
-  HandBrakeCLI \
-    --preset-import-file "${preset_file}" \
-    -Z "${profile}" \
-    -i "${input_file}" \
-    -o "${output_file}" 2>&1 \
-    | throttle_progress \
-    | tee "${log_file}"
+  local -r -a handbrake_flags=(
+    --preset-import-file "${preset_file}"
+    -Z "${profile}"
+    -i "${input_file}"
+    -o "${output_file}"
+  )
+
+  HandBrakeCLI "${handbrake_flags[@]}" 2>&1 | throttle_progress | tee "${log_file}"
 
   local -r exit_code="${PIPESTATUS[0]}"
 
