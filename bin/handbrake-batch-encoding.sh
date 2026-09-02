@@ -211,14 +211,13 @@ main () {
   validate_environment
 
   # Create movie array from subdirectories in base_input_dir
-  local movies
+  local -a movies
   mapfile -t movies < <(find "${base_input_dir}" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort)
 
   # Process all movies
   local movie
 
   for movie in "${movies[@]}"; do
-    # Check for stop flag file
     if [[ -f "${stop_file}" ]]; then
       log_info "Stop file detected. Halting batch processing."
       rm -f "${stop_file}"
